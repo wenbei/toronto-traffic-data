@@ -1,6 +1,5 @@
 {
-  "name": "toronto-open-data-traffic-volumes",
-  "private": true,
+  "name": "toronto-open-data-traffic-volumes-map",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
