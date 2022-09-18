@@ -1,35 +1,32 @@
 <script lang="ts">
-  const API_KEY = "AIzaSyCtfT5Dzc1cvrCJyqXfBdGiHQPVplmjSaM";
-  const MAPS_API = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap`;
+  import MapSearch from "./MapSearch.svelte";
+
+  let map: google.maps.Map;
 
   window.initMap = () => {
     const toronto = { lat: 43.7068153, lng: -79.4287613 };
-    const map = new google.maps.Map(
-      document.getElementById("map") as HTMLElement,
-      {
-        center: toronto,
-        zoom: 11,
-        streetViewControl: false,
-        styles: [
-          {
-            featureType: "poi",
-            elementType: "labels",
-            stylers: [
-              {
-                visibility: "off",
-              },
-            ],
-          },
-        ],
-      }
-    );
+    map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+      center: toronto,
+      zoom: 11,
+      streetViewControl: false,
+      rotateControl: false,
+      tilt: 0,
+      styles: [
+        {
+          featureType: "poi",
+          elementType: "labels",
+          stylers: [
+            {
+              visibility: "off",
+            },
+          ],
+        },
+      ],
+    });
   };
 </script>
 
-<svelte:head>
-  <script async defer src={MAPS_API}></script>
-</svelte:head>
-
+<MapSearch {map} />
 <div id="map" />
 
 <style>
