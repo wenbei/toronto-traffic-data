@@ -1,5 +1,6 @@
 <script lang="ts">
   import MapSearch from "./MapSearch.svelte";
+  import { getAllIntersections } from "../api/toronto-open-data";
 
   let map: google.maps.Map;
 
@@ -11,6 +12,7 @@
       streetViewControl: false,
       rotateControl: false,
       tilt: 0,
+      clickableIcons: false,
       styles: [
         {
           featureType: "poi",
@@ -23,7 +25,39 @@
         },
       ],
     });
+
+    addIntersectionMarkers(map);
   };
+
+  async function addIntersectionMarkers(map) {
+    const intersections = await getAllIntersections();
+
+    intersections.forEach((location) => {
+      const marker = new google.maps.Marker({
+        position: {
+          lat: location.lat,
+          lng: location.lng,
+        },
+        map,
+      });
+
+      marker.addListener("click", () => {
+        const info = new google.maps.InfoWindow({
+          content: location.location,
+        });
+
+        info.open({
+          anchor: marker,
+          map,
+          shouldFocus: true,
+        });
+
+        google.maps.event.addListener(map, "click", () => {
+          info.close();
+        });
+      });
+    });
+  }
 </script>
 
 <MapSearch {map} />
@@ -31,7 +65,6 @@
 
 <style>
   #map {
-    height: 500px;
-    width: 100%;
+    height: 700px;
   }
 </style>
