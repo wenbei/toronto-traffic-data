@@ -31,13 +31,11 @@ interface Location {
 }
 
 export interface CountMetadata {
-  location_id: number;
   count_id: number;
   count_date: string;
 }
 
 export interface CountData {
-  count_id: number;
   time_start: string;
   time_end: string;
 

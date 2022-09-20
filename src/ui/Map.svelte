@@ -1,7 +1,7 @@
 <script lang="ts">
-  import MapSearch from "./MapSearch.svelte";
-  import InfoWindow from "./InfoWindow.svelte";
-  import { getAllIntersections, getCountList } from "../api/toronto-open-data";
+  import MapSearch from "src/ui/MapSearch.svelte";
+  import InfoWindow from "src/ui/InfoWindow.svelte";
+  import { getAllIntersections, getCountList } from "src/api/toronto-open-data";
 
   let map: google.maps.Map;
 

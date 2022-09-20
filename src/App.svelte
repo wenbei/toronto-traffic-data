@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Map from "./ui/Map.svelte";
+  import Map from "src/ui/Map.svelte";
 
   const API_KEY = "AIzaSyCtfT5Dzc1cvrCJyqXfBdGiHQPVplmjSaM";
   const MAPS_API = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap`;
