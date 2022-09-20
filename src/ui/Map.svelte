@@ -30,7 +30,7 @@
     addIntersectionMarkers(map);
   };
 
-  async function addIntersectionMarkers(map) {
+  async function addIntersectionMarkers(map: google.maps.Map) {
     const intersections = await getAllIntersections();
 
     intersections.forEach((location) => {
@@ -65,7 +65,7 @@
           shouldFocus: true,
         });
 
-        google.maps.event.addListener(map, "click", () => {
+        infoElement.addEventListener("focusout", () => {
           info.close();
         });
       });

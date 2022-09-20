@@ -14,13 +14,13 @@
 
     resultText = "";
     geocoder = geocoder ?? new google.maps.Geocoder();
-    let request = {
+    const request = {
       address: address,
     };
     geocoder
       .geocode(request)
       .then((response) => {
-        let geocoderResult = response.results[0];
+        const geocoderResult = response.results[0];
         map.panTo(geocoderResult.geometry.location);
         map.fitBounds(geocoderResult.geometry.viewport);
       })

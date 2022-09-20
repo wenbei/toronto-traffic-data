@@ -173,10 +173,10 @@ export async function getCountList(location_id: number) {
   return datastore.records;
 }
 
-export async function getCountData(count_id: number, count_date: string) {
+export async function getCountData(count: CountMetadata) {
   const resources = pkg.resources.filter((r) => r.datastore_active);
 
-  const decade1 = parseInt(count_date.substring(0, 3).concat("0"));
+  const decade1 = parseInt(count.count_date.substring(0, 3).concat("0"));
   const decade2 = decade1 + 9;
 
   const count_list = resources.find((obj) => {
@@ -184,7 +184,7 @@ export async function getCountData(count_id: number, count_date: string) {
   });
 
   const filters = {
-    count_id: count_id,
+    count_id: count.count_id,
   };
   const datastore = await getDatastore<CountData>(count_list.id, filters);
   return datastore.records;
