@@ -30,13 +30,13 @@ interface Location {
   latest_count_date: string;
 }
 
-interface CountMetadata {
+export interface CountMetadata {
   location_id: number;
   count_id: number;
   count_date: string;
 }
 
-interface CountData {
+export interface CountData {
   count_id: number;
   time_start: string;
   time_end: string;

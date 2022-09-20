@@ -1,6 +1,7 @@
 <script lang="ts">
   import MapSearch from "./MapSearch.svelte";
-  import { getAllIntersections } from "../api/toronto-open-data";
+  import InfoWindow from "./InfoWindow.svelte";
+  import { getAllIntersections, getCountList } from "../api/toronto-open-data";
 
   let map: google.maps.Map;
 
@@ -41,9 +42,21 @@
         map,
       });
 
-      marker.addListener("click", () => {
+      marker.addListener("click", async () => {
+        const countList = await getCountList(location.location_id);
+
+        const infoElement = document.createElement("div");
+
+        new InfoWindow({
+          target: infoElement,
+          props: {
+            location: location.location,
+            countList: countList,
+          },
+        });
+
         const info = new google.maps.InfoWindow({
-          content: location.location,
+          content: infoElement,
         });
 
         info.open({
