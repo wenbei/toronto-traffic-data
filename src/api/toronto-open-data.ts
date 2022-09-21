@@ -66,20 +66,26 @@ export interface CountData {
 
 const packageId = "traffic-volumes-at-intersections-for-all-modes";
 
+const proxyCORS = (url: string) => {
+  return "https://corsproxy.io/?".concat(encodeURIComponent(url));
+};
+
 async function getPackage() {
-  const URL = `/api/3/action/package_show?id=${packageId}`;
-  // const URL = `https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/package_show?id=${packageId}`;
+  const URL = proxyCORS(
+    `https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/package_show?id=${packageId}`
+  );
 
   return await fetch(URL)
     .then((response) => response.json())
     .then((data: CKAN_Response<CKAN_Package>) => {
-      return data.result;
+      return data.result.resources.filter((r) => r.datastore_active);
     });
 }
 
 async function getDatastoreInfo(resource_id: string) {
-  const URL = `/api/3/action/datastore_info`;
-  // const URL = `https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/datastore_info`;
+  const URL = proxyCORS(
+    `https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/datastore_info`
+  );
 
   const body = {
     resource_id: resource_id,
@@ -106,8 +112,9 @@ async function getDatastore<T>(
   filters?: {},
   fields?: string[]
 ) {
-  const URL = `/api/3/action/datastore_search`;
-  // const URL = `https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/datastore_search`;
+  const URL = proxyCORS(
+    `https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/datastore_search`
+  );
 
   const body = {
     resource_id: resource_id,
@@ -132,11 +139,9 @@ async function getDatastore<T>(
     });
 }
 
-const pkg = await getPackage();
+const resources = await getPackage();
 
 export async function getAllIntersections() {
-  const resources = pkg.resources.filter((r) => r.datastore_active);
-
   const locations = resources.find((obj) => {
     return obj.name == "locations";
   });
@@ -154,8 +159,6 @@ export async function getAllIntersections() {
 }
 
 export async function getCountList(location_id: number) {
-  const resources = pkg.resources.filter((r) => r.datastore_active);
-
   const count_list = resources.find((obj) => {
     return obj.name == "count_metadata";
   });
@@ -174,8 +177,6 @@ export async function getCountList(location_id: number) {
 }
 
 export async function getCountData(count: CountMetadata) {
-  const resources = pkg.resources.filter((r) => r.datastore_active);
-
   const decade1 = parseInt(count.count_date.substring(0, 3).concat("0"));
   const decade2 = decade1 + 9;
 

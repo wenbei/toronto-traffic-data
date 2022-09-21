@@ -17,8 +17,10 @@ export default defineConfig({
     },
   },
   publicDir: false,
+  base: "/toronto-traffic-data/",
   build: {
     outDir: "public",
+    target: "esnext",
     rollupOptions: {
       output: {
         entryFileNames: `[name].js`,
