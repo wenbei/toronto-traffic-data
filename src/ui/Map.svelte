@@ -65,7 +65,7 @@
           shouldFocus: true,
         });
 
-        infoElement.addEventListener("focusout", () => {
+        map.addListener("click", () => {
           info.close();
         });
       });

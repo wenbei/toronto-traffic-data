@@ -31,14 +31,15 @@
 </div>
 
 <style>
-  #name {
-    font-weight: bold;
-  }
   #reverse {
     max-height: 12em;
+    max-width: 250px;
     overflow: auto;
     display: flex;
     flex-direction: column-reverse;
+  }
+  #name {
+    font-weight: bold;
   }
   #list {
     margin: 0em;
