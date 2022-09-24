@@ -9,9 +9,9 @@
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^1.0.7",
+    "@sveltejs/vite-plugin-svelte": "^1.0.8",
     "@tsconfig/svelte": "^3.0.0",
-    "@types/google.maps": "^3.50.1",
+    "@types/google.maps": "^3.50.2",
     "svelte": "^3.50.1",
     "svelte-check": "^2.9.0",
     "svelte-preprocess": "^4.10.7",
@@ -21,6 +21,7 @@
     "vite-tsconfig-paths": "^3.5.0"
   },
   "dependencies": {
+    "@googlemaps/markerclusterer": "^2.0.11",
     "svelte-spa-router": "^3.3.0"
   }
 }

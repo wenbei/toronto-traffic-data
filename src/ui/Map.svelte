@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { MarkerClusterer } from "@googlemaps/markerclusterer";
   import MapSearch from "src/ui/MapSearch.svelte";
   import InfoWindow from "src/ui/InfoWindow.svelte";
   import { getAllIntersections, getCountList } from "src/api/toronto-open-data";
@@ -36,6 +37,7 @@
   async function addIntersectionMarkers(map: google.maps.Map) {
     const intersections = await getAllIntersections();
 
+    const markers = [];
     intersections.forEach((location) => {
       const marker = new google.maps.Marker({
         position: {
@@ -44,6 +46,7 @@
         },
         map,
       });
+      markers.push(marker);
 
       marker.addListener("click", async () => {
         const countList = await getCountList(location.location_id);
@@ -73,6 +76,8 @@
         });
       });
     });
+
+    new MarkerClusterer({ map, markers });
   }
 </script>
 
