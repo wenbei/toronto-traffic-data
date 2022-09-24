@@ -1,14 +1,10 @@
 <script lang="ts">
+  import { push } from "svelte-spa-router";
+
   import type { CountMetadata } from "src/api/toronto-open-data";
-  import { getCountData } from "src/api/toronto-open-data";
 
   export let location: string;
   export let countList: CountMetadata[];
-
-  function viewCount(meta: CountMetadata) {
-    // getCountData(meta);
-    console.log(meta.count_id);
-  }
 
   const getWeekday = (date: string) => {
     return new Date(date).toLocaleDateString("en-CA", {
@@ -24,7 +20,10 @@
     {#each countList as count}
       <li>
         {count.count_date} ({getWeekday(count.count_date)})
-        <button on:click={() => viewCount(count)}>View</button>
+        <button
+          on:click={() => push(`#/count/${count.count_id}/${count.count_date}`)}
+          >View</button
+        >
       </li>
     {/each}
   </ul>

@@ -3,6 +3,9 @@
   import InfoWindow from "src/ui/InfoWindow.svelte";
   import { getAllIntersections, getCountList } from "src/api/toronto-open-data";
 
+  const API_KEY = "AIzaSyCtfT5Dzc1cvrCJyqXfBdGiHQPVplmjSaM";
+  const MAPS_API = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap`;
+
   let map: google.maps.Map;
 
   window.initMap = () => {

@@ -42,8 +42,12 @@
   #search {
     padding: 10px 0px;
   }
+  form {
+    display: inline;
+  }
   input {
     height: 2em;
+    min-width: 200px;
     width: 30%;
   }
   button {
