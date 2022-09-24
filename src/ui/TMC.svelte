@@ -1,64 +1,59 @@
 <script lang="ts">
-  export let volumes = {
-    carLeft: 1111,
-    carThrough: 22,
-    carRight: 33,
-    heavyLeft: 44,
-    heavyThrough: 55,
-    heavyRight: 66,
-  };
+  import type { CountData } from "src/api/toronto-open-data";
+
+  export let volumes: CountData & { PHF: number };
 </script>
 
 <div class="square grid">
   <div id="SB" class="v-flex-reverse">
     <div class="h-flex-reverse">
-      <span class="vertical">🡿 {volumes.carLeft}</span>
-      <span class="vertical">🡸 {volumes.carThrough}</span>
-      <span class="vertical">🡼 {volumes.carRight}</span>
+      <span class="vertical">🡿 {volumes.sb_cars_l}</span>
+      <span class="vertical">🡸 {volumes.sb_cars_t}</span>
+      <span class="vertical">🡼 {volumes.sb_cars_r}</span>
     </div>
     <div class="h-flex-reverse">
-      <span class="vertical">({volumes.heavyLeft})</span>
-      <span class="vertical">({volumes.heavyThrough})</span>
-      <span class="vertical">({volumes.heavyRight})</span>
+      <span class="vertical">({volumes.sb_truck_l})</span>
+      <span class="vertical">({volumes.sb_truck_t})</span>
+      <span class="vertical">({volumes.sb_truck_r})</span>
     </div>
   </div>
 
   <div id="WB" class="h-flex">
     <div class="v-flex-reverse">
-      <span>🡿 {volumes.carLeft}</span>
-      <span>🡸 {volumes.carThrough}</span>
-      <span>🡼 {volumes.carRight}</span>
+      <span>🡿 {volumes.wb_cars_l}</span>
+      <span>🡸 {volumes.wb_cars_t}</span>
+      <span>🡼 {volumes.wb_cars_r}</span>
     </div>
     <div class="v-flex-reverse">
-      <span>({volumes.heavyLeft})</span>
-      <span>({volumes.heavyThrough})</span>
-      <span>({volumes.heavyRight})</span>
+      <span>({volumes.wb_truck_l})</span>
+      <span>({volumes.wb_truck_t})</span>
+      <span>({volumes.wb_truck_r})</span>
     </div>
   </div>
 
   <div id="EB" class="h-flex-reverse">
     <div class="v-flex">
-      <span>{volumes.carLeft} 🡽</span>
-      <span>{volumes.carThrough} 🡺</span>
-      <span>{volumes.carRight} 🡾</span>
+      <span>{volumes.eb_cars_l} 🡽</span>
+      <span>{volumes.eb_cars_t} 🡺</span>
+      <span>{volumes.eb_cars_r} 🡾</span>
     </div>
     <div class="v-flex">
-      <span>({volumes.heavyLeft})</span>
-      <span>({volumes.heavyRight})</span>
-      <span>({volumes.heavyThrough})</span>
+      <span>({volumes.wb_truck_l})</span>
+      <span>({volumes.wb_truck_t})</span>
+      <span>({volumes.wb_truck_r})</span>
     </div>
   </div>
 
   <div id="NB" class="v-flex">
     <div class="h-flex">
-      <span class="vertical">{volumes.carLeft} 🡽</span>
-      <span class="vertical">{volumes.carThrough} 🡺</span>
-      <span class="vertical">{volumes.carRight} 🡾</span>
+      <span class="vertical">{volumes.nb_cars_l} 🡽</span>
+      <span class="vertical">{volumes.nb_cars_t} 🡺</span>
+      <span class="vertical">{volumes.nb_cars_r} 🡾</span>
     </div>
     <div class="h-flex">
-      <span class="vertical">({volumes.heavyLeft})</span>
-      <span class="vertical">({volumes.heavyThrough})</span>
-      <span class="vertical">({volumes.heavyRight})</span>
+      <span class="vertical">({volumes.nb_truck_l})</span>
+      <span class="vertical">({volumes.nb_truck_t})</span>
+      <span class="vertical">({volumes.nb_truck_r})</span>
     </div>
   </div>
 </div>
@@ -108,7 +103,7 @@
     font-size: 1.2em;
     line-height: 1.2em;
     padding: 2px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
   }
 
   .grid > div {
@@ -117,6 +112,7 @@
   .square {
     /* height: 300px;
     width: 300px; */
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    padding: 10px;
   }
 </style>

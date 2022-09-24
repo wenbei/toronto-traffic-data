@@ -76,11 +76,15 @@
   }
 </script>
 
+<svelte:head>
+  <script async defer src={MAPS_API}></script>
+</svelte:head>
+
 <MapSearch {map} />
 <div id="map" />
 
 <style>
   #map {
-    height: 700px;
+    height: 600px;
   }
 </style>

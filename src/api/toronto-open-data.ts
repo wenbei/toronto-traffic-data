@@ -36,30 +36,56 @@ export interface CountMetadata {
 }
 
 export interface CountData {
+  location: string;
+
   time_start: string;
   time_end: string;
 
   nb_cars_l: number;
   nb_bus_l: number;
   nb_truck_l: number;
+  nb_cars_t: number;
+  nb_bus_t: number;
+  nb_truck_t: number;
+  nb_cars_r: number;
+  nb_bus_r: number;
+  nb_truck_r: number;
   nx_peds: number;
   nx_bike: number;
 
   sb_cars_l: number;
   sb_bus_l: number;
   sb_truck_l: number;
+  sb_cars_t: number;
+  sb_bus_t: number;
+  sb_truck_t: number;
+  sb_cars_r: number;
+  sb_bus_r: number;
+  sb_truck_r: number;
   sx_peds: number;
   sx_bike: number;
 
   eb_cars_l: number;
   eb_bus_l: number;
   eb_truck_l: number;
+  eb_cars_t: number;
+  eb_bus_t: number;
+  eb_truck_t: number;
+  eb_cars_r: number;
+  eb_bus_r: number;
+  eb_truck_r: number;
   ex_peds: number;
   ex_bike: number;
 
   wb_cars_l: number;
   wb_bus_l: number;
   wb_truck_l: number;
+  wb_cars_t: number;
+  wb_bus_t: number;
+  wb_truck_t: number;
+  wb_cars_r: number;
+  wb_bus_r: number;
+  wb_truck_r: number;
   wx_peds: number;
   wx_bike: number;
 }
@@ -118,7 +144,7 @@ async function getDatastore<T>(
 
   const body = {
     resource_id: resource_id,
-    limit: 100,
+    limit: 10000, // Toronto has about 5800 locations
     filters: filters,
     fields: fields,
   };
