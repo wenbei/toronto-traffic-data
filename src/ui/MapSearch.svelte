@@ -32,7 +32,7 @@
 
 <div>
   <form on:submit|preventDefault={search} class="flex">
-    <input bind:value={searchAddress} class="flex-grow h-8 border-2 border-gray-300" />
+    <input bind:value={searchAddress} class="flex-grow h-8 border-2 border-gray-300 max-w-lg" />
     <button type="submit" class="mx-2 px-2 rounded bg-gray-300">Search</button>
   </form>
   <span>{resultText}</span>

@@ -19,7 +19,7 @@
 <footer>
   <span>
     Data source:
-    <a href="https://open.toronto.ca/dataset/traffic-volumes-at-intersections-for-all-modes/"> Toronto Open Data</a>
+    <a class="text-blue-700 underline" href="https://open.toronto.ca/dataset/traffic-volumes-at-intersections-for-all-modes/"> Toronto Open Data</a>
   </span> <br />
   Disclaimer: This web application is provided "as is". The author does not take responsibility for the accuracy of the provided information. Please do your due dilligence and apply engineering judgement.
 </footer>

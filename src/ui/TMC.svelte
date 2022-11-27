@@ -4,8 +4,8 @@
   export let volumes: CountData & { PHF: number };
 </script>
 
-<div class="grid grid-cols-2 grid-rows-2 aspect-square min-w-[250px]">
-  <div class="absolute p-1 outline outline-1">
+<div class="relative grid grid-cols-2 grid-rows-2 aspect-square min-w-[250px]">
+  <div class="absolute right-0 p-1 outline outline-1">
     PHF: {volumes.PHF}
   </div>
   <div class="flex flex-col-reverse outline outline-1 gap-2 p-1">

@@ -13,34 +13,16 @@
   };
 </script>
 
-<div id="name">{location}</div>
-<div>Available Counts (YYYY-MM-DD)</div>
-<div id="reverse">
-  <ul id="list">
+<div class="font-bold">{location}</div>
+<div class="my-1">Available Counts (YYYY-MM-DD):</div>
+
+<div class="flex flex-col-reverse overflow-auto max-h-40">
+  <ul class="list-disc list-inside">
     {#each countList as count}
-      <li>
+      <li class="list-item m-1">
         {count.count_date} ({getWeekday(count.count_date)})
-        <button
-          on:click={() => push(`#/count/${count.count_id}/${count.count_date}`)}
-          >View</button
-        >
+        <button on:click={() => push(`#/count/${count.count_id}/${count.count_date}`)} class="mx-2 px-2 py-1 rounded bg-gray-200"> View </button>
       </li>
     {/each}
   </ul>
 </div>
-
-<style>
-  #reverse {
-    max-height: 12em;
-    max-width: 250px;
-    overflow: auto;
-    display: flex;
-    flex-direction: column-reverse;
-  }
-  #name {
-    font-weight: bold;
-  }
-  #list {
-    margin: 0em;
-  }
-</style>
