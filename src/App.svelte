@@ -5,14 +5,15 @@
   import ViewCount from "src/ui/ViewCount.svelte";
 
   const routes = {
-    "/": Map,
     "/count/:id/:date": ViewCount,
   };
 </script>
 
-<main>
-  <h1 class="text-2xl font-bold">Toronto Open Data - Traffic Volumes</h1>
-  <!-- <Router {routes} /> -->
+<h1 class="text-2xl font-bold">Toronto Open Data - Traffic Volumes</h1>
+
+<main class="relative">
+  <Router {routes} />
+  <Map />
 </main>
 
 <footer class="mb-2">

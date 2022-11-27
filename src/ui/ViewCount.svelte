@@ -17,16 +17,18 @@
   });
 </script>
 
-<div>
-  <span id="back" on:click={pop}><h3>⮜ Back</h3></span>
-  <h3>{location}</h3>
-</div>
+<div class="absolute top-0 w-full h-full z-10 bg-white">
+  <div>
+    <span id="back" on:click={pop}><h3>⮜ Back</h3></span>
+    <h3>{location}</h3>
+  </div>
 
-<div id="TMC">
-  {#await countData then [peakHourDataAM, peakHourDataPM]}
-    <TMC volumes={peakHourDataAM} />
-    <TMC volumes={peakHourDataPM} />
-  {/await}
+  <div id="TMC">
+    {#await countData then [peakHourDataAM, peakHourDataPM]}
+      <TMC volumes={peakHourDataAM} />
+      <TMC volumes={peakHourDataPM} />
+    {/await}
+  </div>
 </div>
 
 <style>
