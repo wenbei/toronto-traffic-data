@@ -30,27 +30,10 @@
   }
 </script>
 
-<div id="search">
-  <form on:submit|preventDefault={search}>
-    <input bind:value={searchAddress} />
-    <button type="submit">Search</button>
+<div>
+  <form on:submit|preventDefault={search} class="flex">
+    <input bind:value={searchAddress} class="flex-grow h-8 border-2 border-gray-300" />
+    <button type="submit" class="mx-2 px-2 rounded bg-gray-300">Search</button>
   </form>
   <span>{resultText}</span>
 </div>
-
-<style>
-  #search {
-    padding: 10px 0px;
-  }
-  form {
-    display: inline;
-  }
-  input {
-    height: 2em;
-    min-width: 200px;
-    width: 30%;
-  }
-  button {
-    height: 2em;
-  }
-</style>

@@ -86,10 +86,4 @@
 </svelte:head>
 
 <MapSearch {map} />
-<div id="map" />
-
-<style>
-  #map {
-    height: 600px;
-  }
-</style>
+<div id="map" class="flex-grow my-2 bg-gray-300" />

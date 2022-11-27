@@ -9,14 +9,14 @@
   };
 </script>
 
-<h1 class="text-2xl font-bold">Toronto Open Data - Traffic Volumes</h1>
+<h1 class="text-2xl font-bold mb-2">Toronto Open Data - Traffic Volumes</h1>
 
-<main class="relative">
+<main class="relative flex flex-col flex-grow">
   <Router {routes} />
   <Map />
 </main>
 
-<footer class="mb-2">
+<footer>
   <span>
     Data source:
     <a href="https://open.toronto.ca/dataset/traffic-volumes-at-intersections-for-all-modes/"> Toronto Open Data</a>

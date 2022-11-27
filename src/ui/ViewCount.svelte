@@ -17,31 +17,16 @@
   });
 </script>
 
-<div class="absolute top-0 w-full h-full z-10 bg-white">
+<div class="absolute top-0 w-full h-full z-10 py-2 bg-white flex flex-col">
   <div>
-    <span id="back" on:click={pop}><h3>⮜ Back</h3></span>
-    <h3>{location}</h3>
+    <button on:click={pop} class="cursor-pointer p-1 px-2 border-2 border-black text-lg"> ⮜ Back </button>
+    <h3 class="inline-block text-lg">{location}</h3>
   </div>
 
-  <div id="TMC">
+  <div class="flex flex-wrap justify-start content-start flex-grow py-2 gap-4">
     {#await countData then [peakHourDataAM, peakHourDataPM]}
       <TMC volumes={peakHourDataAM} />
       <TMC volumes={peakHourDataPM} />
     {/await}
   </div>
 </div>
-
-<style>
-  #back {
-    cursor: pointer;
-    padding: 5px;
-    outline: 2px solid black;
-  }
-  h3 {
-    display: inline-block;
-  }
-  #TMC {
-    display: flex;
-    flex-wrap: wrap;
-  }
-</style>
