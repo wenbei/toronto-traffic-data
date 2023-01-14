@@ -93,13 +93,11 @@ export interface CountData {
 const packageId = "traffic-volumes-at-intersections-for-all-modes";
 
 const proxyCORS = (url: string) => {
-  return "https://corsproxy.io/?".concat(encodeURIComponent(url));
+  return "https://cors-proxy-uwrykhf2ba-pd.a.run.app/".concat(url);
 };
 
 async function getPackage() {
-  const URL = proxyCORS(
-    `https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/package_show?id=${packageId}`
-  );
+  const URL = proxyCORS(`https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/package_show?id=${packageId}`);
 
   return await fetch(URL)
     .then((response) => response.json())
@@ -109,9 +107,7 @@ async function getPackage() {
 }
 
 async function getDatastoreInfo(resource_id: string) {
-  const URL = proxyCORS(
-    `https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/datastore_info`
-  );
+  const URL = proxyCORS(`https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/datastore_info`);
 
   const body = {
     resource_id: resource_id,
@@ -133,14 +129,8 @@ async function getDatastoreInfo(resource_id: string) {
     });
 }
 
-async function getDatastore<T>(
-  resource_id: string,
-  filters?: {},
-  fields?: string[]
-) {
-  const URL = proxyCORS(
-    `https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/datastore_search`
-  );
+async function getDatastore<T>(resource_id: string, filters?: {}, fields?: string[]) {
+  const URL = proxyCORS(`https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/datastore_search`);
 
   const body = {
     resource_id: resource_id,
@@ -172,14 +162,7 @@ export async function getAllIntersections() {
     return obj.name == "locations";
   });
 
-  const fields = [
-    "location_id",
-    "location",
-    "lat",
-    "lng",
-    "px",
-    "latest_count_date",
-  ];
+  const fields = ["location_id", "location", "lat", "lng", "px", "latest_count_date"];
   const datastore = await getDatastore<Location>(locations.id, {}, fields);
   return datastore.records;
 }
@@ -193,11 +176,7 @@ export async function getCountList(location_id: number) {
     location_id: location_id,
   };
   const fields = ["count_id", "count_date"];
-  const datastore = await getDatastore<CountMetadata>(
-    count_list.id,
-    filters,
-    fields
-  );
+  const datastore = await getDatastore<CountMetadata>(count_list.id, filters, fields);
 
   return datastore.records;
 }
