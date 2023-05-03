@@ -1,8 +1,8 @@
 <script lang="ts">
   import { MarkerClusterer } from "@googlemaps/markerclusterer";
-  import MapSearch from "src/ui/MapSearch.svelte";
-  import InfoWindow from "src/ui/InfoWindow.svelte";
   import { getAllIntersections, getCountList } from "src/api/toronto-open-data";
+  import InfoWindow from "src/ui/InfoWindow.svelte";
+  import MapSearch from "src/ui/MapSearch.svelte";
 
   const API_KEY = "AIzaSyCtfT5Dzc1cvrCJyqXfBdGiHQPVplmjSaM";
   const MAPS_API = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap`;
@@ -63,6 +63,7 @@
 
         const info = new google.maps.InfoWindow({
           content: infoElement,
+          minWidth: 250,
         });
 
         info.open({
