@@ -4,17 +4,18 @@
   import type { CountMetadata } from "src/api/toronto-open-data";
 
   export let location: string;
+  export let location_id: number;
   export let countList: CountMetadata[];
 
   const getWeekday = (date: string) => {
     return new Date(date).toLocaleDateString("en-CA", {
       weekday: "short",
-      timeZone: "UTC"
+      timeZone: "UTC",
     });
   };
 </script>
 
-<div class="font-bold">{location}</div>
+<div class="font-bold">{location} (ID: {location_id})</div>
 <div class="my-1">Available Counts (YYYY-MM-DD):</div>
 
 <div class="flex flex-col-reverse overflow-auto max-h-40">

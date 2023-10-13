@@ -57,6 +57,7 @@
           target: infoElement,
           props: {
             location: location.location,
+            location_id: location.location_id,
             countList: countList,
           },
         });
