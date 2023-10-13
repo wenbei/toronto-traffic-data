@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { MarkerClusterer } from "@googlemaps/markerclusterer";
+  import { MarkerClusterer, SuperClusterAlgorithm } from "@googlemaps/markerclusterer";
   import { getAllIntersections, getCountList } from "src/api/toronto-open-data";
   import InfoWindow from "src/ui/InfoWindow.svelte";
   import MapSearch from "src/ui/MapSearch.svelte";
@@ -78,7 +78,35 @@
       });
     });
 
-    new MarkerClusterer({ map, markers });
+    const algorithm = new SuperClusterAlgorithm({ radius: 100, maxZoom: 14 });
+
+    const renderer = {
+      render: ({ count, position }) => {
+        // create svg url
+        const svg = window.btoa(`
+        <svg fill="#0000ff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+          <circle cx="120" cy="120" opacity="1.0" r="90" />
+        </svg>`);
+
+        // create marker using svg icon
+        return new google.maps.Marker({
+          position,
+          icon: {
+            url: `data:image/svg+xml;base64,${svg}`,
+            scaledSize: new google.maps.Size(45, 45),
+          },
+          label: {
+            text: String(count),
+            color: "rgba(255,255,255,0.9)",
+            fontSize: "12px",
+          },
+          // adjust zIndex to be above other markers
+          zIndex: 1000 + count,
+        });
+      },
+    };
+
+    new MarkerClusterer({ map, markers, algorithm, renderer });
   }
 </script>
 
