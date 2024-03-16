@@ -9,9 +9,9 @@
   };
 </script>
 
-<h1 class="text-2xl font-bold mb-2">Toronto Open Data - Traffic Volumes</h1>
+<h1 class="mb-2 text-2xl font-bold">Toronto Open Data - Traffic Volumes</h1>
 
-<main class="relative flex flex-col flex-grow">
+<main class="relative flex flex-grow flex-col">
   <Router {routes} />
   <Map />
 </main>

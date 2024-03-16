@@ -116,4 +116,4 @@
 </svelte:head>
 
 <MapSearch {map} />
-<div id="map" class="flex-grow my-2 bg-gray-300" />
+<div id="map" class="my-2 flex-grow bg-gray-300" />

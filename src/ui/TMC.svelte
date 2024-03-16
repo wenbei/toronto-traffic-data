@@ -4,11 +4,11 @@
   export let volumes: CountData & { PHF: number };
 </script>
 
-<div class="relative grid grid-cols-2 grid-rows-2 aspect-square min-w-[250px]">
+<div class="relative grid aspect-square min-w-[250px] grid-cols-2 grid-rows-2">
   <div class="absolute right-0 p-1 outline outline-1">
     PHF: {volumes.PHF}
   </div>
-  <div class="flex flex-col-reverse outline outline-1 gap-2 p-1">
+  <div class="flex flex-col-reverse gap-2 p-1 outline outline-1">
     <div class="flex flex-row-reverse">
       <span class="vertical">🡿 {volumes.sb_cars_l + volumes.sb_truck_l + volumes.sb_bus_l}</span>
       <span class="vertical">🡸 {volumes.sb_cars_t + volumes.sb_truck_t + volumes.sb_bus_t}</span>
@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="flex outline outline-1 gap-2 p-1">
+  <div class="flex gap-2 p-1 outline outline-1">
     <div class="flex flex-col-reverse">
       <span>🡿 {volumes.wb_cars_l + volumes.wb_truck_l + volumes.wb_bus_l}</span>
       <span>🡸 {volumes.wb_cars_t + volumes.wb_truck_t + volumes.wb_bus_t}</span>
@@ -34,7 +34,7 @@
     </div>
   </div>
 
-  <div class="flex flex-row-reverse outline outline-1 gap-2 p-1">
+  <div class="flex flex-row-reverse gap-2 p-1 outline outline-1">
     <div class="flex flex-col text-right">
       <span>{volumes.eb_cars_l + volumes.eb_truck_l + volumes.eb_bus_l} 🡽</span>
       <span>{volumes.eb_cars_t + volumes.eb_truck_t + volumes.eb_bus_t} 🡺</span>
@@ -47,7 +47,7 @@
     </div>
   </div>
 
-  <div class="flex flex-col outline outline-1 gap-2 p-1">
+  <div class="flex flex-col gap-2 p-1 outline outline-1">
     <div class="flex text-right">
       <span class="vertical">{volumes.nb_cars_l + volumes.nb_truck_l + volumes.nb_bus_l} 🡽</span>
       <span class="vertical">{volumes.nb_cars_t + volumes.nb_truck_t + volumes.nb_bus_t} 🡺</span>
