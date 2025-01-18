@@ -5,7 +5,7 @@
   import MapSearch from "src/ui/MapSearch.svelte";
 
   const API_KEY = "AIzaSyCtfT5Dzc1cvrCJyqXfBdGiHQPVplmjSaM";
-  const MAPS_API = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap`;
+  const MAPS_API = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&loading=async&callback=initMap`;
 
   let map: google.maps.Map;
 
@@ -112,7 +112,7 @@
 </script>
 
 <svelte:head>
-  <script async defer src={MAPS_API}></script>
+  <script defer src={MAPS_API}></script>
 </svelte:head>
 
 <MapSearch {map} />
