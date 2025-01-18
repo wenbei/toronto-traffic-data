@@ -93,11 +93,14 @@ export interface CountData {
 const packageId = "traffic-volumes-at-intersections-for-all-modes";
 
 const proxyCORS = (url: string) => {
-  return "https://cors-proxy-uwrykhf2ba-pd.a.run.app/".concat(url);
+  if (import.meta.env.DEV) {
+    return url; // Use Vite proxy
+  }
+  return "https://cors-proxy-uwrykhf2ba-pd.a.run.app/".concat("https://ckan0.cf.opendata.inter.prod-toronto.ca", url);
 };
 
 async function getPackage() {
-  const URL = proxyCORS(`https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/package_show?id=${packageId}`);
+  const URL = proxyCORS(`/api/3/action/package_show?id=${packageId}`);
 
   return await fetch(URL)
     .then((response) => response.json())
@@ -107,7 +110,7 @@ async function getPackage() {
 }
 
 async function getDatastoreInfo(resource_id: string) {
-  const URL = proxyCORS(`https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/datastore_info`);
+  const URL = proxyCORS(`/api/3/action/datastore_info`);
 
   const body = {
     resource_id: resource_id,
@@ -130,7 +133,7 @@ async function getDatastoreInfo(resource_id: string) {
 }
 
 async function getDatastore<T>(resource_id: string, filters?: {}, fields?: string[]) {
-  const URL = proxyCORS(`https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/datastore_search`);
+  const URL = proxyCORS(`/api/3/action/datastore_search`);
 
   const body = {
     resource_id: resource_id,

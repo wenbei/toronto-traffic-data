@@ -10,10 +10,9 @@ export default defineConfig({
     // CORS proxy for testing
     proxy: {
       "/api": {
-        target: "https://ckan0.cf.opendata.inter.prod-toronto.ca/api",
+        target: "https://ckan0.cf.opendata.inter.prod-toronto.ca",
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },

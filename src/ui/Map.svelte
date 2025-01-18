@@ -4,7 +4,7 @@
   import InfoWindow from "src/ui/InfoWindow.svelte";
   import MapSearch from "src/ui/MapSearch.svelte";
 
-  const API_KEY = "AIzaSyCtfT5Dzc1cvrCJyqXfBdGiHQPVplmjSaM";
+  const API_KEY = import.meta.env.DEV ? import.meta.env.VITE_DEBUG_MAPS_API_KEY : "AIzaSyCtfT5Dzc1cvrCJyqXfBdGiHQPVplmjSaM";
   const MAPS_API = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&loading=async&callback=initMap`;
 
   let map: google.maps.Map;
