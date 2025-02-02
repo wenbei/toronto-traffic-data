@@ -1,119 +1,48 @@
 <script lang="ts">
-  import { MarkerClusterer, SuperClusterAlgorithm } from "@googlemaps/markerclusterer";
-  import { getAllIntersections, getCountList } from "src/api/toronto-open-data";
-  import InfoWindow from "src/ui/InfoWindow.svelte";
-  import MapSearch from "src/ui/MapSearch.svelte";
+  import "leaflet/dist/leaflet.css";
 
-  const API_KEY = import.meta.env.DEV ? import.meta.env.VITE_DEBUG_MAPS_API_KEY : "AIzaSyCtfT5Dzc1cvrCJyqXfBdGiHQPVplmjSaM";
-  const MAPS_API = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&loading=async&callback=initMap`;
+  import "leaflet.markercluster/dist/MarkerCluster.css";
+  import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
-  let map: google.maps.Map;
+  import { getLatestMetadata } from "src/api/toronto-open-data";
+  import { onMount } from "svelte";
 
-  window.initMap = () => {
-    const toronto = { lat: 43.7068153, lng: -79.4287613 };
-    map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+  import L from "leaflet";
+  import "leaflet.markercluster";
+
+  let map: L.Map;
+
+  onMount(() => {
+    const toronto = { lat: 43.7356981, lng: -79.3707686 };
+    map = L.map("map", {
       center: toronto,
       zoom: 11,
-      streetViewControl: false,
-      rotateControl: false,
-      tilt: 0,
-      clickableIcons: false,
-      styles: [
-        {
-          featureType: "poi",
-          elementType: "labels",
-          stylers: [
-            {
-              visibility: "off",
-            },
-          ],
-        },
-      ],
+      closePopupOnClick: false,
     });
+
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
 
     addIntersectionMarkers(map);
-  };
+  });
 
-  async function addIntersectionMarkers(map: google.maps.Map) {
-    const intersections = await getAllIntersections();
+  async function addIntersectionMarkers(map: L.Map) {
+    const intersections = await getLatestMetadata();
 
-    const markers = [];
-    intersections.forEach((location) => {
-      const marker = new google.maps.Marker({
-        position: {
-          lat: location.lat,
-          lng: location.lng,
-        },
-        map,
-      });
-      markers.push(marker);
-
-      marker.addListener("click", async () => {
-        const countList = await getCountList(location.location_id);
-
-        const infoElement = document.createElement("div");
-
-        new InfoWindow({
-          target: infoElement,
-          props: {
-            location: location.location,
-            location_id: location.location_id,
-            countList: countList,
-          },
-        });
-
-        const info = new google.maps.InfoWindow({
-          content: infoElement,
-          minWidth: 250,
-        });
-
-        info.open({
-          anchor: marker,
-          map,
-          shouldFocus: true,
-        });
-
-        map.addListener("click", () => {
-          info.close();
-        });
-      });
+    const markers = new L.MarkerClusterGroup({
+      disableClusteringAtZoom: 15,
+      showCoverageOnHover: false,
     });
 
-    const algorithm = new SuperClusterAlgorithm({ radius: 100, maxZoom: 14 });
+    intersections.forEach((location) => {
+      const marker = L.marker([location.latitude, location.longitude]).addTo(markers);
+      const popup = L.popup({ autoClose: false }).setContent(`<b>${location.location_name}</b><br/>Latest Count: ${location.latest_count_date}`);
+      marker.bindPopup(popup);
+    });
 
-    const renderer = {
-      render: ({ count, position }) => {
-        // create svg url
-        const svg = window.btoa(`
-        <svg fill="#0000ff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
-          <circle cx="120" cy="120" opacity="1.0" r="90" />
-        </svg>`);
-
-        // create marker using svg icon
-        return new google.maps.Marker({
-          position,
-          icon: {
-            url: `data:image/svg+xml;base64,${svg}`,
-            scaledSize: new google.maps.Size(45, 45),
-          },
-          label: {
-            text: String(count),
-            color: "rgba(255,255,255,0.9)",
-            fontSize: "12px",
-          },
-          // adjust zIndex to be above other markers
-          zIndex: 1000 + count,
-        });
-      },
-    };
-
-    new MarkerClusterer({ map, markers, algorithm, renderer });
+    map.addLayer(markers);
   }
 </script>
 
-<svelte:head>
-  <script defer src={MAPS_API}></script>
-</svelte:head>
-
-<MapSearch {map} />
-<div id="map" class="my-2 flex-grow bg-gray-300" />
+<div id="map" class="my-2 flex-grow bg-gray-300"></div>

@@ -160,7 +160,7 @@ async function getDatastore<T>(resource_id: string, filters?: {}, fields?: strin
 
 const resources = await getPackage();
 
-export async function getAllIntersections() {
+export async function getLatestMetadata() {
   const locations = resources.find((obj) => {
     return obj.name == "locations";
   });
