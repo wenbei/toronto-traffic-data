@@ -5,6 +5,7 @@ interface CKAN_Response<T> {
 interface CKAN_Package {
   resources: {
     datastore_active: boolean;
+    datastore_cache_last_update: string;
     name: string;
     id: string;
   }[];
@@ -21,73 +22,75 @@ interface DatastoreInfo {
   };
 }
 
-interface Location {
-  location_id: number;
-  location: string;
-  lat: number;
-  lng: number;
-  px?: number;
-  latest_count_date: string;
-}
-
 export interface CountMetadata {
   count_id: number;
   count_date: string;
+  location_name: string;
+  latitude: number;
+  longitude: number;
+  px: number;
+  am_peak_start: string;
+  pm_peak_start: string;
+}
+
+export interface LatestCountMetadata extends Omit<CountMetadata, "count_id" | "count_date"> {
+  latest_count_id: number;
+  latest_count_date: string;
 }
 
 export interface CountData {
-  location: string;
+  location_name: string;
 
-  time_start: string;
-  time_end: string;
+  start_time: string;
+  end_time: string;
 
-  nb_cars_l: number;
-  nb_bus_l: number;
-  nb_truck_l: number;
-  nb_cars_t: number;
-  nb_bus_t: number;
-  nb_truck_t: number;
-  nb_cars_r: number;
-  nb_bus_r: number;
-  nb_truck_r: number;
-  nx_peds: number;
-  nx_bike: number;
+  n_appr_cars_l: number;
+  n_appr_bus_l: number;
+  n_appr_truck_l: number;
+  n_appr_cars_t: number;
+  n_appr_bus_t: number;
+  n_appr_truck_t: number;
+  n_appr_cars_r: number;
+  n_appr_bus_r: number;
+  n_appr_truck_r: number;
+  n_appr_peds: number;
+  n_appr_bike: number;
 
-  sb_cars_l: number;
-  sb_bus_l: number;
-  sb_truck_l: number;
-  sb_cars_t: number;
-  sb_bus_t: number;
-  sb_truck_t: number;
-  sb_cars_r: number;
-  sb_bus_r: number;
-  sb_truck_r: number;
-  sx_peds: number;
-  sx_bike: number;
+  s_appr_cars_l: number;
+  s_appr_bus_l: number;
+  s_appr_truck_l: number;
+  s_appr_cars_t: number;
+  s_appr_bus_t: number;
+  s_appr_truck_t: number;
+  s_appr_cars_r: number;
+  s_appr_bus_r: number;
+  s_appr_truck_r: number;
+  s_appr_peds: number;
+  s_appr_bike: number;
 
-  eb_cars_l: number;
-  eb_bus_l: number;
-  eb_truck_l: number;
-  eb_cars_t: number;
-  eb_bus_t: number;
-  eb_truck_t: number;
-  eb_cars_r: number;
-  eb_bus_r: number;
-  eb_truck_r: number;
-  ex_peds: number;
-  ex_bike: number;
+  e_appr_cars_l: number;
+  e_appr_bus_l: number;
+  e_appr_truck_l: number;
+  e_appr_cars_t: number;
+  e_appr_bus_t: number;
+  e_appr_truck_t: number;
+  e_appr_cars_r: number;
+  e_appr_bus_r: number;
+  e_appr_truck_r: number;
+  e_appr_peds: number;
+  e_appr_bike: number;
 
-  wb_cars_l: number;
-  wb_bus_l: number;
-  wb_truck_l: number;
-  wb_cars_t: number;
-  wb_bus_t: number;
-  wb_truck_t: number;
-  wb_cars_r: number;
-  wb_bus_r: number;
-  wb_truck_r: number;
-  wx_peds: number;
-  wx_bike: number;
+  w_appr_cars_l: number;
+  w_appr_bus_l: number;
+  w_appr_truck_l: number;
+  w_appr_cars_t: number;
+  w_appr_bus_t: number;
+  w_appr_truck_t: number;
+  w_appr_cars_r: number;
+  w_appr_bus_r: number;
+  w_appr_truck_r: number;
+  w_appr_peds: number;
+  w_appr_bike: number;
 }
 
 const packageId = "traffic-volumes-at-intersections-for-all-modes";
@@ -137,7 +140,7 @@ async function getDatastore<T>(resource_id: string, filters?: {}, fields?: strin
 
   const body = {
     resource_id: resource_id,
-    limit: 10000, // Toronto has about 5800 locations
+    limit: 10000, // Toronto has about 6200 locations as of Feb 2025
     filters: filters,
     fields: fields,
   };
@@ -161,40 +164,39 @@ async function getDatastore<T>(resource_id: string, filters?: {}, fields?: strin
 const resources = await getPackage();
 
 export async function getLatestMetadata() {
-  const locations = resources.find((obj) => {
-    return obj.name == "locations";
+  const summary = resources.find((obj) => {
+    return obj.name == "tmc_most_recent_summary_data";
   });
 
-  const fields = ["location_id", "location", "lat", "lng", "px", "latest_count_date"];
-  const datastore = await getDatastore<Location>(locations.id, {}, fields);
+  const fields: (keyof LatestCountMetadata)[] = ["latest_count_id", "latest_count_date", "location_name", "latitude", "longitude", "px", "am_peak_start", "pm_peak_start"];
+  const datastore = await getDatastore<LatestCountMetadata>(summary!.id, {}, fields);
   return datastore.records;
 }
 
-export async function getCountList(location_id: number) {
-  const count_list = resources.find((obj) => {
-    return obj.name == "count_metadata";
+export async function getCountList(location_name: string) {
+  const summary = resources.find((obj) => {
+    return obj.name == "tmc_summary_data";
   });
 
-  const filters = {
-    location_id: location_id,
+  const filters: Partial<CountMetadata> = {
+    location_name: location_name,
   };
-  const fields = ["count_id", "count_date"];
-  const datastore = await getDatastore<CountMetadata>(count_list.id, filters, fields);
+  const fields: (keyof CountMetadata)[] = ["count_id", "count_date", "location_name", "latitude", "longitude", "px", "am_peak_start", "pm_peak_start"];
+  const datastore = await getDatastore<CountMetadata>(summary!.id, filters, fields);
 
   return datastore.records;
 }
 
 export async function getCountData(count_id: number, count_date: string) {
-  const decade1 = parseInt(count_date.substring(0, 3).concat("0"));
-  const decade2 = decade1 + 9;
+  const decade = parseInt(count_date.substring(0, 3).concat("0"));
 
   const count_list = resources.find((obj) => {
-    return obj.name == ["raw-data", decade1, decade2].join("-");
+    return obj.name.startsWith(`tmc_raw_data_${decade}`);
   });
 
-  const filters = {
+  const filters: Partial<CountMetadata> = {
     count_id: count_id,
   };
-  const datastore = await getDatastore<CountData>(count_list.id, filters);
+  const datastore = await getDatastore<CountData>(count_list!.id, filters);
   return datastore.records;
 }
