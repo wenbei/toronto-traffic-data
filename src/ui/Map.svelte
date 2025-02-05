@@ -1,14 +1,16 @@
 <script lang="ts">
+import L from "leaflet";
   import "leaflet/dist/leaflet.css";
 
+import "leaflet.markercluster";
   import "leaflet.markercluster/dist/MarkerCluster.css";
   import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
+  import "leaflet-control-geocoder";
+  import "leaflet-control-geocoder/Control.Geocoder.css";
+
   import { getLatestMetadata } from "src/api/toronto-open-data";
   import { onMount } from "svelte";
-
-  import L from "leaflet";
-  import "leaflet.markercluster";
 
   let map: L.Map;
 
@@ -23,6 +25,17 @@
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map);
+
+    // @ts-expect-error, no types for leaflet-control-geocoder
+    const geocoder = L.Control.geocoder({
+      collapsed: false,
+      defaultMarkGeocode: false,
+    })
+      .on("markgeocode", (result: any) => {
+        map.fitBounds(result.geocode.bbox);
+        geocoder.setQuery("");
+      })
+      .addTo(map);
 
     addIntersectionMarkers(map);
   });
