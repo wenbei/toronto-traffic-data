@@ -163,6 +163,14 @@ async function getDatastore<T>(resource_id: string, filters?: {}, fields?: strin
 
 const resources = await getPackage();
 
+export function getUpdateDate() {
+  const summary = resources.find((obj) => {
+    return obj.name == "tmc_most_recent_summary_data";
+  });
+  const updateDate = new Date(summary!.datastore_cache_last_update).toLocaleDateString("en-ca");
+  return updateDate;
+}
+
 export async function getLatestMetadata() {
   const summary = resources.find((obj) => {
     return obj.name == "tmc_most_recent_summary_data";

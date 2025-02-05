@@ -3,6 +3,7 @@
 
   import Router from "svelte-spa-router";
 
+  import { getUpdateDate } from "src/api/toronto-open-data";
   import Map from "src/ui/Map.svelte";
   import ViewCount from "src/ui/ViewCount.svelte";
 
@@ -22,6 +23,7 @@
   <span>
     Data source:
     <a class="text-blue-700 underline" href="https://open.toronto.ca/dataset/traffic-volumes-at-intersections-for-all-modes/"> Toronto Open Data</a>
+    (Last updated: {getUpdateDate()})
   </span> <br />
   Disclaimer: This web application is provided "as is". The author does not take responsibility for the accuracy of the provided information. Please do your due dilligence and apply engineering judgement.
 </footer>
