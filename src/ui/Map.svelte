@@ -64,6 +64,8 @@
     });
 
     map.addLayer(markers);
+
+    L.control.layers(undefined, { Intersections: markers }, { position: "bottomleft", collapsed: false }).addTo(map);
   }
 </script>
 
