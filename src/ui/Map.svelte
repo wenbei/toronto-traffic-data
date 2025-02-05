@@ -1,8 +1,8 @@
 <script lang="ts">
-import L from "leaflet";
+  import L from "leaflet";
   import "leaflet/dist/leaflet.css";
 
-import "leaflet.markercluster";
+  import "leaflet.markercluster";
   import "leaflet.markercluster/dist/MarkerCluster.css";
   import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
@@ -48,9 +48,18 @@ import "leaflet.markercluster";
       showCoverageOnHover: false,
     });
 
+    const getWeekday = (date: string) => {
+      return new Date(date).toLocaleDateString("en-CA", {
+        weekday: "short",
+      });
+    };
+
     intersections.forEach((location) => {
       const marker = L.marker([location.latitude, location.longitude]).addTo(markers);
-      const popup = L.popup({ autoClose: false }).setContent(`<b>${location.location_name}</b><br/>Latest Count: ${location.latest_count_date}`);
+      const popup = L.popup({ autoClose: false }).setContent(
+        `<b>${location.location_name}</b><br/>
+        Latest Count: ${location.latest_count_date} (${getWeekday(location.latest_count_date)})`,
+      );
       marker.bindPopup(popup);
     });
 
