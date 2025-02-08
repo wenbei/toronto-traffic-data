@@ -26,7 +26,18 @@ export default defineConfig({
       output: {
         entryFileNames: `[name].js`,
         chunkFileNames: `[name].js`,
-        assetFileNames: `[name].[ext]`,
+        assetFileNames: (assetInfo) => {
+          const name = assetInfo.names[0];
+          if (name.endsWith(".css")) {
+            return `[name].css`;
+          }
+          return `assets/[name].[ext]`;
+        },
+        manualChunks: (id: string) => {
+          if (id.includes("leaflet")) {
+            return "lib/leaflet";
+          }
+        },
       },
     },
   },
