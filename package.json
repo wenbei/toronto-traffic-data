@@ -1,6 +1,5 @@
 {
   "name": "toronto-open-data-traffic-volumes-map",
-  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
