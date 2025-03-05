@@ -9,6 +9,19 @@
   import "leaflet-control-geocoder";
   import "leaflet-control-geocoder/Control.Geocoder.css";
 
+  // workaround for missing icons during build, see https://github.com/Leaflet/Leaflet/issues/4968
+  // @ts-expect-error
+  delete L.Icon.Default.prototype._getIconUrl;
+
+  import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png?no-inline";
+  import markerIcon from "leaflet/dist/images/marker-icon.png?no-inline";
+  import markerShadow from "leaflet/dist/images/marker-shadow.png?no-inline";
+  L.Icon.Default.mergeOptions({
+    iconUrl: markerIcon,
+    iconRetinaUrl: markerIcon2x,
+    shadowUrl: markerShadow,
+  });
+
   import { getLatestMetadata } from "src/api/toronto-open-data";
   import { onMount } from "svelte";
 
