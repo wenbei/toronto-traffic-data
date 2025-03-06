@@ -22,8 +22,9 @@
     shadowUrl: markerShadow,
   });
 
-  import { getLatestMetadata } from "src/api/toronto-open-data";
-  import { onMount } from "svelte";
+  import { getCountList, getLatestMetadata } from "src/api/toronto-open-data";
+  import InfoWindow from "src/ui/InfoWindow.svelte";
+  import { mount, onMount } from "svelte";
 
   let map: L.Map;
 
@@ -61,19 +62,22 @@
       showCoverageOnHover: false,
     });
 
-    const getWeekday = (date: string) => {
-      return new Date(date).toLocaleDateString("en-CA", {
-        weekday: "short",
-      });
-    };
-
     intersections.forEach((location) => {
       const marker = L.marker([location.latitude, location.longitude]).addTo(markers);
-      const popup = L.popup({ autoClose: false }).setContent(
-        `<b>${location.location_name}</b><br/>
-        Latest Count: ${location.latest_count_date} (${getWeekday(location.latest_count_date)})`,
-      );
+      const popup = L.popup({ autoClose: false, minWidth: 80, maxWidth: 200, content: `<b>${location.location_name}</b><br/>Loading...` });
       marker.bindPopup(popup);
+      marker.on("popupopen", async () => {
+        const countList = await getCountList(location.location_name);
+        const infoWindow = document.createElement("div");
+        mount(InfoWindow, {
+          target: infoWindow,
+          props: {
+            location_name: location.location_name,
+            counts: countList,
+          },
+        });
+        popup.setContent(infoWindow);
+      });
     });
 
     map.addLayer(markers);

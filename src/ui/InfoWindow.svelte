@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { CountMetadata, LatestCountMetadata } from "src/api/toronto-open-data";
+  import type { CountMetadata } from "src/api/toronto-open-data";
 
   // import { push } from "svelte-spa-router";
 
-  const { counts, location }: { counts: CountMetadata[]; location: LatestCountMetadata } = $props();
+  const { counts, location_name }: { counts: CountMetadata[]; location_name: string } = $props();
 
   const getWeekday = (date: string) => {
     return new Date(date).toLocaleDateString("en-CA", {
@@ -12,7 +12,7 @@
   };
 </script>
 
-<div class="font-bold">{location.location_name}</div>
+<div class="font-bold">{location_name}</div>
 <div class="my-1">Available Counts:</div>
 
 <div class="flex max-h-30 flex-col overflow-auto">
