@@ -8,6 +8,7 @@
   const getWeekday = (date: string) => {
     return new Date(date).toLocaleDateString("en-CA", {
       weekday: "short",
+      timeZone: "UTC",
     });
   };
 </script>
