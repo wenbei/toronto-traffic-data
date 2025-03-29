@@ -16,11 +16,11 @@
 <div class="font-bold">{location_name}</div>
 <div class="my-1">Available Counts:</div>
 
-<div class="flex max-h-30 flex-col overflow-auto">
+<div class="flex max-h-30 min-w-[280px] flex-col overflow-auto">
   <ul class="list-inside list-disc">
     {#each counts as count}
       <li class="m-1 list-item">
-        {count.count_date} ({getWeekday(count.count_date)})
+        {count.count_date} ({getWeekday(count.count_date)}) [ID: {count.count_id}]
         <!-- <button on:click={() => push(`#/count/${count.count_id}/${count.count_date}`)} class="mx-2 rounded bg-gray-200 px-2 py-1"> View </button> -->
       </li>
     {/each}

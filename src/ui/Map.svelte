@@ -64,7 +64,7 @@
 
     intersections.forEach((location) => {
       const marker = L.marker([location.latitude, location.longitude]).addTo(markers);
-      const popup = L.popup({ autoClose: false, minWidth: 80, maxWidth: 200, content: `<b>${location.location_name}</b><br/>Loading...` });
+      const popup = L.popup({ autoClose: false, maxWidth: 280, content: `<b>${location.location_name}</b><br/>Loading...` });
       marker.bindPopup(popup);
       marker.on("popupopen", async () => {
         const countList = await getCountList(location.location_name);
