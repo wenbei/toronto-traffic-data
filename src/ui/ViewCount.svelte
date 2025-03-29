@@ -30,6 +30,8 @@
     {#await countData then [peakHourDataAM, peakHourDataPM]}
       <TMC volumes={peakHourDataAM} />
       <TMC volumes={peakHourDataPM} />
+    {:catch error}
+      {error}
     {/await}
   </div>
 </div>

@@ -206,5 +206,6 @@ export async function getCountData(count_id: number, count_date: string) {
     count_id: count_id,
   };
   const datastore = await getDatastore<CountData>(count_list!.id, filters);
+  if (datastore.records.length == 0) throw new Error(`No data found for count_id ${count_id} in ${count_list!.name}`);
   return datastore.records;
 }
