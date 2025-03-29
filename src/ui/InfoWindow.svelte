@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { CountMetadata } from "src/api/toronto-open-data";
 
-  // import { push } from "svelte-spa-router";
+  import { push } from "svelte-spa-router";
 
   const { counts, location_name }: { counts: CountMetadata[]; location_name: string } = $props();
 
@@ -21,7 +21,7 @@
     {#each counts as count}
       <li class="m-1 list-item">
         {count.count_date} ({getWeekday(count.count_date)}) [ID: {count.count_id}]
-        <!-- <button on:click={() => push(`#/count/${count.count_id}/${count.count_date}`)} class="mx-2 rounded bg-gray-200 px-2 py-1"> View </button> -->
+        <button onclick={() => push(`#/count/${count.count_id}/${count.count_date}`)} class="mx-1 rounded bg-gray-200 px-2 py-1"> View </button>
       </li>
     {/each}
   </ul>
