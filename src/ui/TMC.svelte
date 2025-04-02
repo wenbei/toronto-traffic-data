@@ -49,9 +49,9 @@
 
   <div class="flex flex-col gap-2 p-1 outline">
     <div class="flex text-right">
-      <span class="sideways-down text-lg">🡿 {volumes.s_appr_cars_l + volumes.s_appr_truck_l + volumes.s_appr_bus_l}</span>
-      <span class="sideways-down text-lg">🡸 {volumes.s_appr_cars_t + volumes.s_appr_truck_t + volumes.s_appr_bus_t}</span>
-      <span class="sideways-down text-lg">🡼 {volumes.s_appr_cars_r + volumes.s_appr_truck_r + volumes.s_appr_bus_r}</span>
+      <span class="sideways-down text-left text-lg">🡿 {volumes.s_appr_cars_l + volumes.s_appr_truck_l + volumes.s_appr_bus_l}</span>
+      <span class="sideways-down text-left text-lg">🡸 {volumes.s_appr_cars_t + volumes.s_appr_truck_t + volumes.s_appr_bus_t}</span>
+      <span class="sideways-down text-left text-lg">🡼 {volumes.s_appr_cars_r + volumes.s_appr_truck_r + volumes.s_appr_bus_r}</span>
     </div>
     <div class="flex text-right">
       <span class="sideways-down text-lg">({Math.round(((volumes.s_appr_truck_l + volumes.s_appr_bus_l) / (volumes.s_appr_cars_l + volumes.s_appr_truck_l + volumes.s_appr_bus_l) || 0) * 100)}%)</span>
