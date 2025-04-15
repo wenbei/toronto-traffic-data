@@ -106,9 +106,11 @@ export function getPeakHourData(countDataList: CountData[]) {
   let PM: CountData[] = [];
 
   countDataList.forEach((c) => {
-    let hour = new Date(c.start_time).getHours();
-    if (hour < 10) AM.push(c);
-    if (hour >= 16) PM.push(c);
+    const start_time = new Date(c.start_time);
+    const hour = start_time.getHours();
+    const minute = start_time.getMinutes();
+    if ((hour == 6 && minute >= 30) || (hour >= 7 && hour < 10) || (hour == 10 && minute < 30)) AM.push(c);
+    if (hour >= 14) PM.push(c);
   });
 
   const peakHourDataAM = calculatePeakHour(AM);
