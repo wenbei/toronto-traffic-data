@@ -1,4 +1,4 @@
-import type { CountData } from "src/api/toronto-open-data";
+import { VehicleKeys, type CountData } from "src/api/toronto-open-data";
 
 const sumArray = (array: number[]) => {
   return array.reduce((p, c) => p + c, 0);
@@ -9,63 +9,11 @@ const getPHF = (array: number[]) => {
   return Math.round(PHF * 100) / 100;
 };
 
-type Keys = keyof Omit<CountData, "location_name" | "start_time" | "end_time">;
-const VehicleKeys: Keys[] = [
-  "n_appr_cars_l",
-  "n_appr_bus_l",
-  "n_appr_truck_l",
-  "n_appr_cars_t",
-  "n_appr_bus_t",
-  "n_appr_truck_t",
-  "n_appr_cars_r",
-  "n_appr_bus_r",
-  "n_appr_truck_r",
-
-  "s_appr_cars_l",
-  "s_appr_bus_l",
-  "s_appr_truck_l",
-  "s_appr_cars_t",
-  "s_appr_bus_t",
-  "s_appr_truck_t",
-  "s_appr_cars_r",
-  "s_appr_bus_r",
-  "s_appr_truck_r",
-
-  "e_appr_cars_l",
-  "e_appr_bus_l",
-  "e_appr_truck_l",
-  "e_appr_cars_t",
-  "e_appr_bus_t",
-  "e_appr_truck_t",
-  "e_appr_cars_r",
-  "e_appr_bus_r",
-  "e_appr_truck_r",
-
-  "w_appr_cars_l",
-  "w_appr_bus_l",
-  "w_appr_truck_l",
-  "w_appr_cars_t",
-  "w_appr_bus_t",
-  "w_appr_truck_t",
-  "w_appr_cars_r",
-  "w_appr_bus_r",
-  "w_appr_truck_r",
-];
-
 function calculatePeakHour(countDataList: CountData[]) {
   let countVolumes: number[][] = [];
   countDataList.forEach((obj) => {
-    let arr: number[] = [];
-
-    Object.entries(obj).forEach(([key, value]) => {
-      // Type error for Array.includes, see https://github.com/microsoft/TypeScript/issues/14520
-      // @ts-ignore
-      if (VehicleKeys.includes(key)) {
-        arr.push(value);
-      }
-    });
-
-    countVolumes.push(arr);
+    const { location_name, start_time, ...volumes } = obj;
+    countVolumes.push(Object.values(volumes));
   });
 
   const intTotal = countVolumes.map((c) => {
@@ -85,15 +33,14 @@ function calculatePeakHour(countDataList: CountData[]) {
 
   let peakHourData = {
     PHF: PHF[peakHourIndex],
-    start_time: countDataList[peakHourIndex].start_time,
-  } as CountData & { PHF: number };
+  } as VehicleKeys & { PHF: number };
 
   peakInterval.forEach((obj) => {
     Object.entries(obj).forEach(([key, value]) => {
       // Type error for Array.includes, see https://github.com/microsoft/TypeScript/issues/14520
       // @ts-ignore
       if (VehicleKeys.includes(key)) {
-        peakHourData[key as Keys] = (peakHourData[key as Keys] ?? 0) + value;
+        peakHourData[key as keyof VehicleKeys] = (peakHourData[key as keyof VehicleKeys] ?? 0) + value;
       }
     });
   });

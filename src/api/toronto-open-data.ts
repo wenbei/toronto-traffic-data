@@ -38,60 +38,55 @@ export interface LatestCountMetadata extends Omit<CountMetadata, "count_id" | "c
   latest_count_date: string;
 }
 
-export interface CountData {
+export interface CountData extends VehicleKeys {
   location_name: string;
-
   start_time: string;
-  end_time: string;
-
-  n_appr_cars_l: number;
-  n_appr_bus_l: number;
-  n_appr_truck_l: number;
-  n_appr_cars_t: number;
-  n_appr_bus_t: number;
-  n_appr_truck_t: number;
-  n_appr_cars_r: number;
-  n_appr_bus_r: number;
-  n_appr_truck_r: number;
-  n_appr_peds: number;
-  n_appr_bike: number;
-
-  s_appr_cars_l: number;
-  s_appr_bus_l: number;
-  s_appr_truck_l: number;
-  s_appr_cars_t: number;
-  s_appr_bus_t: number;
-  s_appr_truck_t: number;
-  s_appr_cars_r: number;
-  s_appr_bus_r: number;
-  s_appr_truck_r: number;
-  s_appr_peds: number;
-  s_appr_bike: number;
-
-  e_appr_cars_l: number;
-  e_appr_bus_l: number;
-  e_appr_truck_l: number;
-  e_appr_cars_t: number;
-  e_appr_bus_t: number;
-  e_appr_truck_t: number;
-  e_appr_cars_r: number;
-  e_appr_bus_r: number;
-  e_appr_truck_r: number;
-  e_appr_peds: number;
-  e_appr_bike: number;
-
-  w_appr_cars_l: number;
-  w_appr_bus_l: number;
-  w_appr_truck_l: number;
-  w_appr_cars_t: number;
-  w_appr_bus_t: number;
-  w_appr_truck_t: number;
-  w_appr_cars_r: number;
-  w_appr_bus_r: number;
-  w_appr_truck_r: number;
-  w_appr_peds: number;
-  w_appr_bike: number;
 }
+
+export const VehicleKeys = [
+  "n_appr_cars_l",
+  "n_appr_bus_l",
+  "n_appr_truck_l",
+  "n_appr_cars_t",
+  "n_appr_bus_t",
+  "n_appr_truck_t",
+  "n_appr_cars_r",
+  "n_appr_bus_r",
+  "n_appr_truck_r",
+
+  "s_appr_cars_l",
+  "s_appr_bus_l",
+  "s_appr_truck_l",
+  "s_appr_cars_t",
+  "s_appr_bus_t",
+  "s_appr_truck_t",
+  "s_appr_cars_r",
+  "s_appr_bus_r",
+  "s_appr_truck_r",
+
+  "e_appr_cars_l",
+  "e_appr_bus_l",
+  "e_appr_truck_l",
+  "e_appr_cars_t",
+  "e_appr_bus_t",
+  "e_appr_truck_t",
+  "e_appr_cars_r",
+  "e_appr_bus_r",
+  "e_appr_truck_r",
+
+  "w_appr_cars_l",
+  "w_appr_bus_l",
+  "w_appr_truck_l",
+  "w_appr_cars_t",
+  "w_appr_bus_t",
+  "w_appr_truck_t",
+  "w_appr_cars_r",
+  "w_appr_bus_r",
+  "w_appr_truck_r",
+] as const;
+export type VehicleKeys = {
+  [key in (typeof VehicleKeys)[number]]: number;
+};
 
 const packageId = "traffic-volumes-at-intersections-for-all-modes";
 
@@ -135,7 +130,7 @@ async function getDatastoreInfo(resource_id: string) {
     });
 }
 
-async function getDatastore<T>(resource_id: string, filters?: {}, fields?: string[]) {
+async function getDatastore<T>(resource_id: string, filters?: {}, fields?: string[], sort?: string) {
   const URL = proxyCORS(`/api/3/action/datastore_search`);
 
   const body = {
@@ -143,6 +138,7 @@ async function getDatastore<T>(resource_id: string, filters?: {}, fields?: strin
     limit: 10000, // Toronto has about 6200 locations as of Feb 2025
     filters: filters,
     fields: fields,
+    sort: sort,
   };
 
   const request = {
@@ -205,7 +201,7 @@ export async function getCountData(count_id: number, count_date: string) {
   const filters: Partial<CountMetadata> = {
     count_id: count_id,
   };
-  const datastore = await getDatastore<CountData>(count_list!.id, filters);
+  const datastore = await getDatastore<CountData>(count_list!.id, filters, ["location_name", "start_time", ...VehicleKeys], "start_time");
   if (datastore.records.length == 0) throw new Error(`No data found for count_id ${count_id} in ${count_list!.name}`);
   return datastore.records;
 }

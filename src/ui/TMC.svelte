@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { CountData } from "src/api/toronto-open-data";
+  import type { VehicleKeys } from "src/api/toronto-open-data";
 
-  let { volumes }: { volumes: CountData & { PHF: number } } = $props();
+  let { volumes }: { volumes: VehicleKeys & { PHF: number } } = $props();
 </script>
 
 <div class="relative grid aspect-square min-w-[250px] grid-cols-2 grid-rows-2">
