@@ -15,9 +15,9 @@
       <span class="sideways-up text-lg">🡼 {volumes.n_appr_cars_r + volumes.n_appr_truck_r + volumes.n_appr_bus_r}</span>
     </div>
     <div class="flex flex-row-reverse">
-      <span class="sideways-up text-lg">({Math.round(((volumes.n_appr_truck_l + volumes.n_appr_bus_l) / (volumes.n_appr_cars_l + volumes.n_appr_truck_l + volumes.n_appr_bus_l) || 0) * 100)}%)</span>
-      <span class="sideways-up text-lg">({Math.round(((volumes.n_appr_truck_t + volumes.n_appr_bus_t) / (volumes.n_appr_cars_t + volumes.n_appr_truck_t + volumes.n_appr_bus_t) || 0) * 100)}%)</span>
-      <span class="sideways-up text-lg">({Math.round(((volumes.n_appr_truck_r + volumes.n_appr_bus_r) / (volumes.n_appr_cars_r + volumes.n_appr_truck_r + volumes.n_appr_bus_r) || 0) * 100)}%)</span>
+      <span class="sideways-up text-lg">({Math.ceil(((volumes.n_appr_truck_l + volumes.n_appr_bus_l) / (volumes.n_appr_cars_l + volumes.n_appr_truck_l + volumes.n_appr_bus_l) || 0) * 100)}%)</span>
+      <span class="sideways-up text-lg">({Math.ceil(((volumes.n_appr_truck_t + volumes.n_appr_bus_t) / (volumes.n_appr_cars_t + volumes.n_appr_truck_t + volumes.n_appr_bus_t) || 0) * 100)}%)</span>
+      <span class="sideways-up text-lg">({Math.ceil(((volumes.n_appr_truck_r + volumes.n_appr_bus_r) / (volumes.n_appr_cars_r + volumes.n_appr_truck_r + volumes.n_appr_bus_r) || 0) * 100)}%)</span>
     </div>
   </div>
 
@@ -28,9 +28,9 @@
       <span class="text-lg">🡼 {volumes.e_appr_cars_r + volumes.e_appr_truck_r + volumes.e_appr_bus_r}</span>
     </div>
     <div class="flex flex-col-reverse">
-      <span class="text-lg">({Math.round(((volumes.e_appr_truck_l + volumes.e_appr_bus_l) / (volumes.e_appr_cars_l + volumes.e_appr_truck_l + volumes.e_appr_bus_l) || 0) * 100)}%)</span>
-      <span class="text-lg">({Math.round(((volumes.e_appr_truck_t + volumes.e_appr_bus_t) / (volumes.e_appr_cars_t + volumes.e_appr_truck_t + volumes.e_appr_bus_t) || 0) * 100)}%)</span>
-      <span class="text-lg">({Math.round(((volumes.e_appr_truck_r + volumes.e_appr_bus_r) / (volumes.e_appr_cars_r + volumes.e_appr_truck_r + volumes.e_appr_bus_r) || 0) * 100)}%)</span>
+      <span class="text-lg">({Math.ceil(((volumes.e_appr_truck_l + volumes.e_appr_bus_l) / (volumes.e_appr_cars_l + volumes.e_appr_truck_l + volumes.e_appr_bus_l) || 0) * 100)}%)</span>
+      <span class="text-lg">({Math.ceil(((volumes.e_appr_truck_t + volumes.e_appr_bus_t) / (volumes.e_appr_cars_t + volumes.e_appr_truck_t + volumes.e_appr_bus_t) || 0) * 100)}%)</span>
+      <span class="text-lg">({Math.ceil(((volumes.e_appr_truck_r + volumes.e_appr_bus_r) / (volumes.e_appr_cars_r + volumes.e_appr_truck_r + volumes.e_appr_bus_r) || 0) * 100)}%)</span>
     </div>
   </div>
 
@@ -41,9 +41,9 @@
       <span class="text-lg">{volumes.w_appr_cars_r + volumes.w_appr_truck_r + volumes.w_appr_bus_r} 🡾</span>
     </div>
     <div class="flex flex-col text-right">
-      <span class="text-lg">({Math.round(((volumes.w_appr_truck_l + volumes.w_appr_bus_l) / (volumes.w_appr_cars_l + volumes.w_appr_truck_l + volumes.w_appr_bus_l) || 0) * 100)}%)</span>
-      <span class="text-lg">({Math.round(((volumes.w_appr_truck_t + volumes.w_appr_bus_t) / (volumes.w_appr_cars_t + volumes.w_appr_truck_t + volumes.w_appr_bus_t) || 0) * 100)}%)</span>
-      <span class="text-lg">({Math.round(((volumes.w_appr_truck_r + volumes.w_appr_bus_r) / (volumes.w_appr_cars_r + volumes.w_appr_truck_r + volumes.w_appr_bus_r) || 0) * 100)}%)</span>
+      <span class="text-lg">({Math.ceil(((volumes.w_appr_truck_l + volumes.w_appr_bus_l) / (volumes.w_appr_cars_l + volumes.w_appr_truck_l + volumes.w_appr_bus_l) || 0) * 100)}%)</span>
+      <span class="text-lg">({Math.ceil(((volumes.w_appr_truck_t + volumes.w_appr_bus_t) / (volumes.w_appr_cars_t + volumes.w_appr_truck_t + volumes.w_appr_bus_t) || 0) * 100)}%)</span>
+      <span class="text-lg">({Math.ceil(((volumes.w_appr_truck_r + volumes.w_appr_bus_r) / (volumes.w_appr_cars_r + volumes.w_appr_truck_r + volumes.w_appr_bus_r) || 0) * 100)}%)</span>
     </div>
   </div>
 
@@ -54,9 +54,9 @@
       <span class="sideways-down text-left text-lg">🡼 {volumes.s_appr_cars_r + volumes.s_appr_truck_r + volumes.s_appr_bus_r}</span>
     </div>
     <div class="flex text-right">
-      <span class="sideways-down text-lg">({Math.round(((volumes.s_appr_truck_l + volumes.s_appr_bus_l) / (volumes.s_appr_cars_l + volumes.s_appr_truck_l + volumes.s_appr_bus_l) || 0) * 100)}%)</span>
-      <span class="sideways-down text-lg">({Math.round(((volumes.s_appr_truck_t + volumes.s_appr_bus_t) / (volumes.s_appr_cars_t + volumes.s_appr_truck_t + volumes.s_appr_bus_t) || 0) * 100)}%)</span>
-      <span class="sideways-down text-lg">({Math.round(((volumes.s_appr_truck_r + volumes.s_appr_bus_r) / (volumes.s_appr_cars_r + volumes.s_appr_truck_r + volumes.s_appr_bus_r) || 0) * 100)}%)</span>
+      <span class="sideways-down text-lg">({Math.ceil(((volumes.s_appr_truck_l + volumes.s_appr_bus_l) / (volumes.s_appr_cars_l + volumes.s_appr_truck_l + volumes.s_appr_bus_l) || 0) * 100)}%)</span>
+      <span class="sideways-down text-lg">({Math.ceil(((volumes.s_appr_truck_t + volumes.s_appr_bus_t) / (volumes.s_appr_cars_t + volumes.s_appr_truck_t + volumes.s_appr_bus_t) || 0) * 100)}%)</span>
+      <span class="sideways-down text-lg">({Math.ceil(((volumes.s_appr_truck_r + volumes.s_appr_bus_r) / (volumes.s_appr_cars_r + volumes.s_appr_truck_r + volumes.s_appr_bus_r) || 0) * 100)}%)</span>
     </div>
   </div>
 </div>
