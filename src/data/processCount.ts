@@ -67,11 +67,13 @@ function calculatePeakHour(countDataList: CountData[]) {
   }
 
   const peakHourIndex = hourlyTotals.indexOf(Math.max(...hourlyTotals));
+  const peakHourStartTime = getTime(expandedCountDataList[peakHourIndex]?.start_time!);
   const peakInterval = expandedCountDataList.slice(peakHourIndex, peakHourIndex + 4);
 
   let peakHourData = {
     PHF: PHF[peakHourIndex],
-  } as VehicleKeys & { PHF: number };
+    peakHourStartTime: peakHourStartTime,
+  } as VehicleKeys & { PHF: number; peakHourStartTime: string };
 
   peakInterval.forEach((obj) => {
     Object.entries(obj!).forEach(([key, value]) => {
